@@ -67,6 +67,8 @@ for test_input in sorted(glob.glob('*.in')):
 print("Cleaning up...")
 if cabal_file == '':
     run(f"rm {sol_name} *.o *.hi", shell=True)
+else:
+    run(f"rm -rf dist-newstyle/", shell=True)
 
 if not ok:
     sys.exit(1)
