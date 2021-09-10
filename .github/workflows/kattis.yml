@@ -33,7 +33,9 @@ jobs:
 
     - name: Run tests
       run: |
-        for d in `ls -d */` do
+        for d in `ls -d */`
+        do
           cd $d
           python3 ../test.py
           cd ..
+        done
