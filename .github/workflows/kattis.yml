@@ -1,9 +1,5 @@
 name: Kattis CI
 
-defaults:
-  run:
-    shell: zsh
-
 on:
   push:
     branches: [ main ]
@@ -22,9 +18,22 @@ jobs:
         ghc-version: '8.10.3'
         cabal-version: '3.2'
 
+
+    - name: Cache
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-cabal
+      with:
+        path: ~/.cabal
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
     - name: Run tests
       run: |
-        for d in *(/) do
+        for d in `ls -d */` do
           cd $d
           python3 ../test.py
           cd ..
