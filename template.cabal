@@ -1,0 +1,9 @@
+cabal-version:      2.4
+name:               %problem
+version:            0.1.0.0
+license:            BSD-3-Clause
+
+executable %problem
+    main-is:          %problem.hs
+    build-depends:    base ^>=4.14.1.0, vector, parsec, mtl, hashable, containers, unordered-containers, bytestring, split, array
+    default-language: Haskell2010
