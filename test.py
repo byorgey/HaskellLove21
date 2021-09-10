@@ -39,6 +39,8 @@ else:
 if result.returncode != 0:
     sys.exit(1);
 
+ok = True
+
 for test_input in sorted(glob.glob('*.in')):
     print(test_input + ": ", end='')
     test_name = '.'.join(test_input.split('.')[0:-1])
@@ -60,9 +62,13 @@ for test_input in sorted(glob.glob('*.in')):
         print(bcolors.FAIL + "Fail" + bcolors.ENDC, end=' ')
         print(f'({(end-start):.2}s)')
         print(result.stdout.decode('utf-8'))
+        ok = False
 
 print("Cleaning up...")
 if cabal_file == '':
     run(f"rm {sol_name} *.o *.hi", shell=True)
 else:
     run(f"rm -rf dist-newstyle/", shell=True)
+
+if not ok:
+    sys.exit(1)
